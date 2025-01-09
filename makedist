@@ -265,6 +265,9 @@ fi
 URLS=""
 CVMFSURL=""
 CVMFSRPMURLS=""
+CVMFS_BASEURL_MIRROR1="https://cvmrepo.s3.cern.ch/cvmrepo"
+CVMFS_BASEURL_MIRROR2="https://cvmrepo.web.cern.ch/cvmrepo"
+CVMFS_BASEURL=$CVMFS_BASEURL_MIRROR1
 if [ "$ARCH" = "ppc64le" ]; then
     # Grab cvmfs package from copr, using yumdownloader to calculate
     #  the URL
@@ -277,9 +280,6 @@ if [ "$ARCH" = "ppc64le" ]; then
     CVMFSRPMNAME="$(basename $CVMFSRPMURLS)"
     CVMFSVERSION="`echo "$CVMFSRPMNAME" 's/.*cvmfs-\([^-]*\)-.*/\1/'`"
 else
-    CVMFS_BASEURL_MIRROR1="https://cvmrepo.s3.cern.ch/cvmrepo"
-    CVMFS_BASEURL_MIRROR2="https://cvmrepo.web.cern.ch/cvmrepo"
-    CVMFS_BASEURL=$CVMFS_BASEURL_MIRROR1
     CVMFSVERSION="`curl -Ls $CVMFS_BASEURL/.latest_cvmfs_version_prod`"
     if [ -z "CVMFSVERSION" ]; then
       echo "WARN: Couldn't find .latest_cvmfs_version_prod in mirror $CVMFS_BASEURL, switching over.." >&2
